@@ -8,13 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis = ["🚜","⛵️","✈️","🚗","🚚","🚐","🛴","🚃","🚀","🚕","🚑","🏍","🚒","🚎"]
-    @State var emojiCount = 10
+    static let vehicles = ["🚜","⛵️","✈️","🚗","🚚","🚐","🛴","🚃","🚀","🚕","🚑","🏍","🚒","🚎"]
+    static let animals = ["🐶","🐱","🐹","🐻","🐼","🦁","🐒","🐧","🐝","🐍","🐙","🐠","🦞"]
+    static let plants = ["🌵","🌲","🌴","🪴","🌹","🌺","🌼","🌸","🌾","🍀"]
+    
+    @State var emojis = ContentView.vehicles.shuffled()
+    
     var body: some View {
         VStack {
+            Text("Memorize!")
             ScrollView {
-                LazyVGrid (columns: [GridItem(.adaptive(minimum: 65, maximum: 100))]) {
-                    ForEach(emojis[0..<emojiCount], id:\.self) {
+                LazyVGrid (columns: [GridItem(.adaptive(minimum: 65))]) {
+                    ForEach(emojis[0..<emojis.count], id:\.self) {
                         emoji in CardView(content: emoji)
                             .aspectRatio(2/3, contentMode: .fit)
                     }
@@ -23,9 +28,11 @@ struct ContentView: View {
             }
             Spacer()
             HStack {
-                remove
+                vehiclesButton
                 Spacer()
-                add
+                animalsButton
+                Spacer()
+                plantsButton
             }
             .padding(.horizontal)
             .font(.largeTitle)
@@ -34,23 +41,36 @@ struct ContentView: View {
         .padding(.vertical)
     }
     
-    var remove: some View {
+    var vehiclesButton: some View {
         Button(action: {
-            if emojiCount > 1 {
-                emojiCount -= 1
-            }
+            emojis = ContentView.vehicles.shuffled()
         }, label: {
-            Image(systemName: "minus.circle")
+            VStack {
+                Image(systemName: "car.2")
+                Text("Vehicles").font(.title2)
+            }
         })
     }
     
-    var add: some View {
+    var animalsButton: some View {
         Button(action: {
-            if emojiCount < emojis.count {
-                emojiCount += 1
-            }
+            emojis = ContentView.animals.shuffled()
         }, label: {
-            Image(systemName: "plus.circle")
+            VStack {
+                Image(systemName: "ladybug")
+                Text("Animals").font(.title2)
+            }
+        })
+    }
+    
+    var plantsButton: some View {
+        Button(action: {
+            emojis = ContentView.plants.shuffled()
+        }, label: {
+            VStack {
+                Image(systemName: "leaf")
+                Text("Plants").font(.title2)
+            }
         })
     }
 }
@@ -58,7 +78,7 @@ struct ContentView: View {
 
 struct CardView: View {
     var content: String
-    @State var isFaceUp: Bool = true
+    @State var isFaceUp: Bool = false
     
     var body: some View {
         ZStack{
