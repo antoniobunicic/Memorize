@@ -3,6 +3,7 @@
 //  Memorize
 //
 //  Created by Antonio Bunicic on 26.06.2021..
+//  ViewModel
 //
 
 import Foundation
@@ -13,7 +14,7 @@ class EmojiMemoryGame: ObservableObject {
     static let plants = ["🌵","🌲","🌴","🪴","🌹","🌺","🌼","🌸","🌾","🍀"]
     
     static func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>(numberOfPairs: 4) { pairIndex in EmojiMemoryGame.vehicles[pairIndex] }
+        MemoryGame<String>(numberOfPairs: 8) { pairIndex in EmojiMemoryGame.vehicles[pairIndex] }
     }
         
     @Published private var model: MemoryGame<String> = createMemoryGame()

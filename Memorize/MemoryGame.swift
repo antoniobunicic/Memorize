@@ -3,7 +3,9 @@
 //  Memorize
 //
 //  Created by Antonio Bunicic on 26.06.2021..
+//  Model
 //
+
 
 import Foundation
 
@@ -41,6 +43,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(content: content, id: pairIndex*2))
             cards.append(Card(content: content, id: pairIndex*2+1))
         }
+        cards.shuffle()
     }
     
     struct Card: Identifiable {
