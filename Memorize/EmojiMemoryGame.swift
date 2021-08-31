@@ -9,16 +9,32 @@
 import Foundation
 
 class EmojiMemoryGame: ObservableObject {
-    static let vehicles = ["🚜","⛵️","✈️","🚗","🚚","🚐","🛴","🚃","🚀","🚕","🚑","🏍","🚒","🚎"]
-    static let animals = ["🐶","🐱","🐹","🐻","🐼","🦁","🐒","🐧","🐝","🐍","🐙","🐠","🦞"]
-    static let plants = ["🌵","🌲","🌴","🪴","🌹","🌺","🌼","🌸","🌾","🍀"]
-    
+    static let emojisByTheme: Dictionary<String, Array<String>> =
+        [ "Vehicles": ["🚜","⛵️","✈️","🚗","🚚","🚐","🛴","🚃","🚀","🚕","🚑","🏍","🚒","🚎"],
+          "Animals":
+            ["🐶","🐱","🐹","🐻","🐼","🦁","🐒","🐧","🐝","🐍","🐙","🐠","🦞"],
+          "Plants":
+            ["🌵","🌲","🌴","🪴","🌹","🌺","🌼","🌸","🌾","🍀"],
+          "Fruits":
+            ["🍏","🍎","🍐","🍊","🍋","🍌","🍉","🍇","🫐","🍓","🍒","🍑","🥭"],
+          "Vegetables":
+            ["🍅","🍆","🥑","🥦","🥬","🥒","🌶","🫑","🌽","🥕","🫒","🧄","🧅","🥔"],
+          "Gluten Paradise":
+            ["🥐","🥯","🍞","🥖","🥨","🥞","🧇","🍪","🍔","🌭","🥧"]
+        ]
+
     static func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>(numberOfPairs: 8) { pairIndex in EmojiMemoryGame.vehicles[pairIndex] }
+        let randomKeyValue = EmojiMemoryGame.emojisByTheme.randomElement();
+        return MemoryGame<String>(theme: randomKeyValue!.key, numberOfPairs: 8) {
+            pairIndex in randomKeyValue!.value[pairIndex] }
     }
         
     @Published private var model: MemoryGame<String> = createMemoryGame()
 
+    var theme: String {
+        model.theme
+    }
+    
     var cards: Array<MemoryGame<String>.Card> {
         model.cards
     }

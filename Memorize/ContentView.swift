@@ -12,6 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         ScrollView {
+            Text(viewModel.theme)
             LazyVGrid (columns: [GridItem(.adaptive(minimum: 65))]) {
                 ForEach(viewModel.cards) { card in
                     CardView(card: card)
