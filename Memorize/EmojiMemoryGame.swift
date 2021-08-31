@@ -29,7 +29,7 @@ class EmojiMemoryGame: ObservableObject {
             pairIndex in randomKeyValue!.value[pairIndex] }
     }
         
-    @Published private var model: MemoryGame<String> = createMemoryGame()
+    @Published private var model = createMemoryGame()
 
     var theme: String {
         model.theme
